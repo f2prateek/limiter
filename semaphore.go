@@ -1,16 +1,23 @@
 package semaphore
 
-type empty struct{}
-type Semaphore chan empty
+type Semaphore chan struct{}
 
+// Create a Semaphore that controls access to `n` resources.
 func New(n int) Semaphore {
-	return Semaphore(make(chan empty, n))
+	return Semaphore(make(chan struct{}, n))
 }
 
-func (s Semaphore) Acquire() {
-	s <- empty{}
+// Acquire `n` resources.
+func (s Semaphore) Acquire(n int) {
+	e := struct{}{}
+	for i := 0; i < n; i++ {
+		s <- e
+	}
 }
 
-func (s Semaphore) Release() {
-	<-s
+// Release `n` resources.
+func (s Semaphore) Release(n int) {
+	for i := 0; i < n; i++ {
+		<-s
+	}
 }
