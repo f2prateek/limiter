@@ -1,8 +1,10 @@
+// Package semaphore provides a semaphore synchronization primitive.
 package semaphore
 
+// Semaphore controls access to a finite number of resources.
 type Semaphore chan struct{}
 
-// Create a Semaphore that controls access to `n` resources.
+// New creates a Semaphore that controls access to `n` resources.
 func New(n int) Semaphore {
 	return Semaphore(make(chan struct{}, n))
 }
