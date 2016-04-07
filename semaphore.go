@@ -11,9 +11,8 @@ func New(n int) Semaphore {
 
 // Acquire `n` resources.
 func (s Semaphore) Acquire(n int) {
-	e := struct{}{}
 	for i := 0; i < n; i++ {
-		s <- e
+		s <- struct{}{}
 	}
 }
 
