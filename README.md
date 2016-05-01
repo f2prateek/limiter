@@ -9,10 +9,9 @@ s := semaphore.New(5)
 
 for {
   s.Acquire()
+  // Only 5 go-routines will run simultaneously.
   go func() {
     defer s.Release()
-
-    // Only 5 go-routines will ever be executing simultaneously.
   }()
 }
 ```
